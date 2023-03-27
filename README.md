@@ -14,14 +14,7 @@ This app is designed to be used while training with a hang board or similar clim
 
 ## Credits
 
-The code in `main.dart` and this README were produced by ChatGPT in response to the following questions:
-
-- "Can you code a hang board timer app using Flutter for me?"
-- "Can you give me a nice README.md for the project?"
-
-The sound effect used in the app was obtained from [FreeSound](https://freesound.org/).
-
-We would also like to thank the Flutter team and the open-source community for their contributions to the development of Flutter and its ecosystem.
+We would like to thank the Flutter team and the open-source community for their contributions to the development of Flutter and its ecosystem.
 
 ## License
 
