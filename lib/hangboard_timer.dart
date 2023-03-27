@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
@@ -18,17 +19,17 @@ class _HangBoardTimerState extends State<HangBoardTimer> {
   final int _workTime = 7;
   final int _pauseTime = 3;
   final int _restTime = 60;
-  int _time = 0;
+  final int _hangTime = 20000;
   int _remainingHangingTime = 20000;
+  final int _refreshRate = 10;
 
   Timer? _timer;
 
   void _startTimer() {
     _isHanging = true;
-    _timer = Timer.periodic(const Duration(milliseconds: 100), (_) {
+    _timer = Timer.periodic(Duration(milliseconds: _refreshRate), (_) {
       setState(() {
-        _remainingHangingTime -= 100;
-        _time = _remainingHangingTime ~/ 1000;
+        _remainingHangingTime -= _refreshRate;
         if (_remainingHangingTime <= 0) {
           Vibration.vibrate(duration: 1000);
           _isHanging = false;
@@ -49,7 +50,7 @@ class _HangBoardTimerState extends State<HangBoardTimer> {
     _timer?.cancel();
     setState(() {
       _isHanging = false;
-      _remainingHangingTime = 20000;
+      _remainingHangingTime = _hangTime;
     });
   }
 
@@ -65,35 +66,45 @@ class _HangBoardTimerState extends State<HangBoardTimer> {
       appBar: AppBar(
         title: const Text('Hang Board Timer'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: [
-          Text(
-            _isHanging ? 'Hang!' : "Rest",
-            style: const TextStyle(fontSize: 60),
+          FractionallySizedBox(
+            widthFactor: 1 - max(_remainingHangingTime / _hangTime, 0),
+            child: Container(
+              color: Colors.green,
+            ),
           ),
-          const SizedBox(height: 50),
-          Text(
-            '${_remainingHangingTime ~/ 60000}:${((_remainingHangingTime ~/ 1000) % 60).toString().padLeft(2, '0')}',
-            style: const TextStyle(fontSize: 60),
-          ),
-          const SizedBox(height: 50),
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: _isHanging ? null : _startTimer,
-                child: const Text('Start'),
+              Text(
+                _isHanging ? 'Hang!' : "Rest",
+                style: const TextStyle(fontSize: 60),
               ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: _isHanging ? _stopTimer : null,
-                child: const Text('Stop'),
+              const SizedBox(height: 50),
+              Text(
+                '${_remainingHangingTime ~/ 60000}:${((_remainingHangingTime ~/ 1000) % 60).toString().padLeft(2, '0')}',
+                style: const TextStyle(fontSize: 60),
               ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: _resetTimer,
-                child: const Text('Reset'),
+              const SizedBox(height: 50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: _isHanging ? null : _startTimer,
+                    child: const Text('Start'),
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: _isHanging ? _stopTimer : null,
+                    child: const Text('Stop'),
+                  ),
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: _resetTimer,
+                    child: const Text('Reset'),
+                  ),
+                ],
               ),
             ],
           ),
