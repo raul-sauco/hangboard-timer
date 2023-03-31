@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'hangboard_timer.dart';
+import 'create_timer_form.dart';
 
 void main() {
   runApp(const HangboardTimerApp());
@@ -43,15 +44,22 @@ class CreateTimerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Second Screen'),
+        title: const Text('Create New Timer'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first screen when tapped.
-          },
-          child: const Text('Go back!'),
-        ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/');
+            },
+            child: const Text('Go back!'),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CreateTimerForm(),
+          ),
+        ],
       ),
     );
   }
