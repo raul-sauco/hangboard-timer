@@ -77,6 +77,11 @@ class _HangBoardTimerState extends State<HangBoardTimer> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/create');
+                  },
+                  child: const Text('Create a New Timer')),
               Text(
                 _isHanging ? 'Hang!' : "Rest",
                 style: const TextStyle(fontSize: 60),
