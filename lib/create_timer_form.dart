@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'create_timer_stepper.dart';
+
+const List<num> repsSets = <num>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 class CreateTimerForm extends StatefulWidget {
   const CreateTimerForm({super.key});
 
@@ -8,8 +12,18 @@ class CreateTimerForm extends StatefulWidget {
 }
 
 class _CreateTimerState extends State<CreateTimerForm> {
+  final _timerNameTextController = TextEditingController();
+
+  // Clean up the controller when the widget is removed
+  @override
+  void dispose() {
+    _timerNameTextController.dispose();
+    super.dispose();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
+//todo add numbers input field
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -19,6 +33,7 @@ class _CreateTimerState extends State<CreateTimerForm> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            controller: _timerNameTextController,
             validator: (value) {
               // todo form validation methods go here
               if (value == null || value.isEmpty) {
@@ -31,17 +46,69 @@ class _CreateTimerState extends State<CreateTimerForm> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')));
-              }
-            },
-            child: const Text('Submit'),
+          child: TextFormField(
+            keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.next,
+            decoration:
+                InputDecoration(hintText: 'sets', labelText: 'How many sets?'),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    //ScaffoldMessenger.of(context).showSnackBar(
+                    //    const SnackBar(content: Text('Processing Data')));
+                    Navigator.of(context).pushNamed('/create/reps');
+                  }
+                },
+                child: const Text('Next'),
+              ),
+            ],
           ),
         )
       ]),
+    );
+  }
+}
+
+class RepsDropdownButton extends StatefulWidget {
+  const RepsDropdownButton({super.key});
+
+  @override
+  State<RepsDropdownButton> createState() => _RepsDropdownButtonState();
+}
+
+class _RepsDropdownButtonState extends State<RepsDropdownButton> {
+  num dropdownValue = repsSets.first;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<num>(
+      //isExpanded: true,
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_drop_down_circle),
+      elevation: 16,
+      style: Theme.of(context).textTheme.bodyLarge,
+      underline: Container(
+        height: 2,
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
+      ),
+      onChanged: (num? value) {
+        // This is called when user selects an item
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: repsSets.map<DropdownMenuItem<num>>((num value) {
+        return DropdownMenuItem<num>(
+          value: value,
+          child: Text(value.toString()),
+        );
+      }).toList(),
     );
   }
 }
