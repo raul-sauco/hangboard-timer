@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hangboard_timer/main.dart';
 
-import 'create_timer_stepper.dart';
+import 'set_stepper.dart';
 
 class Set {
   late List reps;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'hangboard_timer.dart';
 import 'create_timer_form.dart';
-import 'create_timer_stepper.dart';
+import 'set_stepper.dart';
 
 void main() {
   runApp(const HangboardTimerApp());
@@ -83,13 +83,65 @@ class CreateRepsScreen extends StatefulWidget {
 }
 
 class _CreateRepsState extends State<CreateRepsScreen> {
+  int _index = 0;
+
+  List<Step> getSteps(int sets) {
+    List<Step> mySteps = [];
+    for (int i = 1; i <= sets; i++) {
+      final _step = Step(
+          title: Text('Set $i '),
+          content: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              children: [
+                Text('set $i reps '),
+                //...List.generate(_formCount, (index) => repForm(index)),
+                //buttonRow(),
+                //Visibility(
+                //    visible: _dataArray.isNotEmpty,
+                //    child: Text(_data!.toString())),
+              ],
+            ),
+          ));
+      mySteps.add(_step);
+    }
+    return mySteps;
+  }
+
+  // Function stepper widget
+
+  repStepper(int sets) {
+    return Stepper(
+        currentStep: _index,
+        onStepCancel: () {
+          if (_index > 0) {
+            setState(() {
+              _index -= 1;
+            });
+          }
+        },
+        onStepContinue: () {
+          if (_index <= 0) {
+            setState(() {
+              _index += 1;
+            });
+          }
+        },
+        onStepTapped: (int index) {
+          setState(() {
+            _index = index;
+          });
+        },
+        steps: getSteps(sets));
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(args.sets.toString()),
+    int sets = args.sets;
+    return Scaffold(
+      body: repStepper(sets),
     );
   }
 }
