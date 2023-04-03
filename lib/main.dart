@@ -85,6 +85,10 @@ class CreateRepsScreen extends StatefulWidget {
 class _CreateRepsState extends State<CreateRepsScreen> {
   int _index = 0;
 
+  int _formCount = 0;
+  final List<Map<int, dynamic>> _dataArray = [];
+  int? _data = 0;
+
   List<Step> getSteps(int sets) {
     List<Step> mySteps = [];
     for (int i = 1; i <= sets; i++) {
@@ -94,12 +98,11 @@ class _CreateRepsState extends State<CreateRepsScreen> {
             alignment: Alignment.centerLeft,
             child: Column(
               children: [
-                Text('set $i reps '),
-                //...List.generate(_formCount, (index) => repForm(index)),
-                //buttonRow(),
-                //Visibility(
-                //    visible: _dataArray.isNotEmpty,
-                //    child: Text(_data!.toString())),
+                ...List.generate(_formCount, (index) => repForm(index)),
+                buttonRow(),
+                Visibility(
+                    visible: _dataArray.isNotEmpty,
+                    child: Text(_data!.toString())),
               ],
             ),
           ));
@@ -107,6 +110,52 @@ class _CreateRepsState extends State<CreateRepsScreen> {
     }
     return mySteps;
   }
+
+  repForm(key) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: TextFormField(
+        decoration: InputDecoration(hintText: 'Form ${key + 1}'),
+        onChanged: null,
+      ),
+    );
+  }
+
+  buttonRow() => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Visibility(
+            visible: _formCount > 0,
+            child: IconButton(
+                onPressed: () {
+                  if (_dataArray.isNotEmpty) {
+                    _dataArray.removeAt(_dataArray.length - 1);
+                  }
+                  setState(() {
+                    _data = _dataArray.toString() as int?;
+                    _formCount--;
+                  });
+                },
+                icon: const CircleAvatar(
+                  backgroundColor: Colors.red,
+                  child: Icon(
+                    Icons.remove,
+                  ),
+                )),
+          ),
+          IconButton(
+              onPressed: () {
+                setState(() => _formCount++);
+              },
+              icon: const CircleAvatar(
+                backgroundColor: Colors.teal,
+                child: Icon(
+                  Icons.add,
+                ),
+              )),
+        ],
+      );
 
   // Function stepper widget
 
@@ -178,7 +227,7 @@ class _CreateRepsState extends State<CreateRepsScreen> {
 //    return mySteps;
 //  }
 
-//  Widget repForm(int key) => Padding(
+//  repForm(int key) => Padding(
 //        padding: const EdgeInsets.only(bottom: 10.0),
 //        child: TextFormField(
 //          decoration: InputDecoration(hintText: 'Form ${key + 1}'),
@@ -186,41 +235,7 @@ class _CreateRepsState extends State<CreateRepsScreen> {
 //        ),
 //      );
 
-//  Widget buttonRow() => Row(
-//        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//        crossAxisAlignment: CrossAxisAlignment.center,
-//        children: [
-//          Visibility(
-//            visible: _formCount > 0,
-//            child: IconButton(
-//                onPressed: () {
-//                  if (_dataArray.isNotEmpty) {
-//                    _dataArray.removeAt(_dataArray.length - 1);
-//                  }
-//                  setState(() {
-//                    _data = _dataArray.toString() as int?;
-//                    _formCount--;
-//                  });
-//                },
-//                icon: const CircleAvatar(
-//                  backgroundColor: Colors.red,
-//                  child: Icon(
-//                    Icons.remove,
-//                  ),
-//                )),
-//          ),
-//          IconButton(
-//              onPressed: () {
-//                setState(() => _formCount++);
-//              },
-//              icon: const CircleAvatar(
-//                backgroundColor: Colors.teal,
-//                child: Icon(
-//                  Icons.add,
-//                ),
-//              )),
-//        ],
-//      );
+
 
 //  Widget Stepper(_index)=>Stepper(
 //        currentStep: _index,
