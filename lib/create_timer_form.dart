@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hangboard_timer/main.dart';
 
 import 'create_timer_stepper.dart';
+
+class Set {
+  late List reps;
+  late int restAfterset;
+
+  Set(this.reps, this.restAfterset);
+}
 
 const List<num> repsSets = <num>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -13,6 +21,7 @@ class CreateTimerForm extends StatefulWidget {
 
 class _CreateTimerState extends State<CreateTimerForm> {
   final _timerNameTextController = TextEditingController();
+  final _timerSetTextController = TextEditingController();
 
   // Clean up the controller when the widget is removed
   @override
@@ -47,6 +56,7 @@ class _CreateTimerState extends State<CreateTimerForm> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            controller: _timerSetTextController,
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
             decoration:
@@ -62,7 +72,9 @@ class _CreateTimerState extends State<CreateTimerForm> {
                   if (_formKey.currentState!.validate()) {
                     //ScaffoldMessenger.of(context).showSnackBar(
                     //    const SnackBar(content: Text('Processing Data')));
-                    Navigator.of(context).pushNamed('/create/reps');
+                    Navigator.pushNamed(context, CreateRepsScreen.routeName,
+                        arguments: ScreenArguments(
+                            int.parse(_timerSetTextController.text)));
                   }
                 },
                 child: const Text('Next'),
