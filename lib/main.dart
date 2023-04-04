@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'hangboard_timer.dart';
 import 'create_timer_form.dart';
 import 'set_stepper.dart';
+import 'show_dialog.dart';
 
 void main() {
   runApp(const HangboardTimerApp());
@@ -73,93 +74,65 @@ class CreateTimerScreen extends StatelessWidget {
   }
 }
 
-class CreateRepsScreen extends StatefulWidget {
+class CreateRepsScreen extends StatelessWidget {
   const CreateRepsScreen({super.key});
 
   static const routeName = '/create/rep';
 
   @override
-  State<CreateRepsScreen> createState() => _CreateRepsState();
-}
-
-class _CreateRepsState extends State<CreateRepsScreen> {
-  int _index = 0;
-
-  int _formCount = 0;
-  final List<Map<int, dynamic>> _dataArray = [];
-  int? _data = 0;
-
-  List<Step> getSteps(int sets) {
-    List<Step> mySteps = [];
-    for (int i = 1; i <= sets; i++) {
-      final _step = Step(
-          title: Text('Set $i '),
-          content: Container(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              children: [
-                ...List.generate(_formCount, (index) => repForm(index)),
-                buttonRow(),
-                Visibility(
-                    visible: _dataArray.isNotEmpty,
-                    child: Text(_data!.toString())),
-              ],
-            ),
-          ));
-      mySteps.add(_step);
-    }
-    return mySteps;
-  }
-
-  repForm(key) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(hintText: 'Form ${key + 1}'),
-        onChanged: null,
-      ),
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Create reps'),
+          ),
+          body: const Center(
+            child: SetsStepperWidget(),
+          )),
     );
   }
+}
 
-  buttonRow() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Visibility(
-            visible: _formCount > 0,
-            child: IconButton(
-                onPressed: () {
-                  if (_dataArray.isNotEmpty) {
-                    _dataArray.removeAt(_dataArray.length - 1);
-                  }
-                  setState(() {
-                    _data = _dataArray.toString() as int?;
-                    _formCount--;
-                  });
-                },
-                icon: const CircleAvatar(
-                  backgroundColor: Colors.red,
-                  child: Icon(
-                    Icons.remove,
-                  ),
-                )),
-          ),
-          IconButton(
-              onPressed: () {
-                setState(() => _formCount++);
-              },
-              icon: const CircleAvatar(
-                backgroundColor: Colors.teal,
-                child: Icon(
-                  Icons.add,
-                ),
-              )),
-        ],
-      );
+class SetsStepperWidget extends StatefulWidget {
+  const SetsStepperWidget({super.key});
 
-  // Function stepper widget
+  @override
+  State<SetsStepperWidget> createState() => _SetsStepperState();
+}
 
-  repStepper(int sets) {
+// Group controller for the rep form
+class _RepControllers {
+  TextEditingController hangTime = TextEditingController();
+  TextEditingController restTime = TextEditingController();
+  void dispose() {
+    hangTime.dispose();
+    restTime.dispose();
+  }
+}
+
+class _SetsStepperState extends State<SetsStepperWidget> {
+  // Step counts
+  int _index = 0;
+
+  List<_RepControllers> _repControllers = [];
+  List<TextField> _hangTimeFields = [];
+  List<TextField> _restTimeFields = [];
+
+  @override
+  void dispose() {
+    for (final controller in _repControllers) {
+      controller.dispose();
+    }
+    _saveController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+
+    int sets = args.sets;
+
     return Stepper(
         currentStep: _index,
         onStepCancel: () {
@@ -184,104 +157,102 @@ class _CreateRepsState extends State<CreateRepsScreen> {
         steps: getSteps(sets));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+  // Function stepper widget
 
-    int sets = args.sets;
-    return Scaffold(
-      body: repStepper(sets),
+  List<Step> getSteps(int sets) {
+    List<Step> mySteps = [];
+    for (int i = 1; i <= sets; i++) {
+      final _step = Step(
+          title: Text('Set $i '),
+          content: Container(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              children: [
+                SizedBox(height: 300, child: _listView()),
+                _addRep(),
+                _saveButton(context, i),
+              ],
+            ),
+          ));
+      mySteps.add(_step);
+    }
+    return mySteps;
+  }
+
+  Widget _addRep() {
+    return ListTile(
+      title: Icon(Icons.add),
+      onTap: () {
+        final rep = _RepControllers();
+
+        final hangTimeField = _generateTextField(rep.hangTime, 'hang time');
+        final restTimeField = _generateTextField(rep.restTime, 'rest time');
+
+        setState(() {
+          _repControllers.add(rep);
+          _hangTimeFields.add(hangTimeField);
+          _restTimeFields.add(restTimeField);
+        });
+      },
+    );
+  }
+
+  TextField _generateTextField(TextEditingController controller, String hint) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: hint,
+      ),
+    );
+  }
+
+  Widget _listView() {
+    final children = [
+      for (var i = 0; i < _repControllers.length; i++)
+        Container(
+          margin: EdgeInsets.all(5),
+          child: InputDecorator(
+            child: Column(
+              children: [_hangTimeFields[i], _restTimeFields[i]],
+            ),
+            decoration: InputDecoration(
+              labelText: 'Set $i.toString()',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
+        )
+    ];
+    return SingleChildScrollView(
+        child: Column(
+      children: children,
+    ));
+  }
+
+  final _saveController = TextEditingController();
+  Widget _saveButton(BuildContext context, int set) {
+    final button = ElevatedButton(
+      onPressed: () async {
+        List reps = [];
+        for (var index = 0; index < _repControllers.length; index++) {
+          String rep = "hangTime: ${_repControllers[index].hangTime.text}\n" +
+              "restTime: ${_repControllers[index].restTime.text}\n";
+          reps.add(rep);
+        }
+        Map setData = {'set': set.toString(), 'reps': reps.toString()};
+
+        await showMessage(context, setData.toString(), "set");
+      },
+      child: Text("Save"),
+    );
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        button,
+      ],
     );
   }
 }
-
-
-
-//class _CreateRepsState extends State<CreateRepsScreen> {
-//  int _formCount = 0;
-//  final List<Map<int, dynamic>> _dataArray = [];
-//  int? _data = 0;
-
-//  int _index = 0;
-
-//  List<Step> getSteps(int sets) {
-//    List<Step> mySteps = [];
-//    for (int i = 1; i <= sets; i++) {
-//      final _step = Step(
-//          title: Text('Set $i '),
-//          content: Container(
-//            alignment: Alignment.centerLeft,
-//            child: Column(
-//              children: [
-//                Text('set $i reps '),
-//                ...List.generate(_formCount, (index) => repForm(index)),
-//                buttonRow(),
-//                Visibility(
-//                    visible: _dataArray.isNotEmpty,
-//                    child: Text(_data!.toString())),
-//              ],
-//            ),
-//          ));
-//      mySteps.add(_step);
-//    }
-//    return mySteps;
-//  }
-
-//  repForm(int key) => Padding(
-//        padding: const EdgeInsets.only(bottom: 10.0),
-//        child: TextFormField(
-//          decoration: InputDecoration(hintText: 'Form ${key + 1}'),
-//          onChanged: null,
-//        ),
-//      );
-
-
-
-//  Widget Stepper(_index)=>Stepper(
-//        currentStep: _index,
-//        onStepCancel: () {
-//          if (_index > 0) {
-//            setState(() {
-//              _index -= 1;
-//            });
-//          }
-//        },
-//        onStepContinue: () {
-//          if (_index <= 0) {
-//            setState(() {
-//              _index += 1;
-//            });
-//          }
-//        },
-//        onStepTapped: (int index) {
-//          setState(() {
-//            _index = index;
-//          });
-//        },
-//        steps: getSteps(sets));
-
-        
-//  @override
-//  Widget build(BuildContext context) {
-//    return Scaffold(
-//      appBar: AppBar(
-//        title: const Text('Create New Timer'),
-//      ),
-//      body: Column(
-//        mainAxisSize: MainAxisSize.min,
-//        children: [
-//          ElevatedButton(
-//            onPressed: () {
-//              Navigator.of(context).pushNamed('/create');
-//            },
-//            child: const Text('Go back!'),
-//          ),
-//          Padding(
-//            padding: EdgeInsets.all(8.0),
-//            child: const CreateTimerStepper(),
-//          ),
-//        ],
-//      ),
-//    );
-//  }
-//}
