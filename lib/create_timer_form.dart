@@ -27,6 +27,7 @@ class _CreateTimerState extends State<CreateTimerForm> {
   @override
   void dispose() {
     _timerNameTextController.dispose();
+    _timerSetTextController.dispose();
     super.dispose();
   }
 
@@ -72,9 +73,12 @@ class _CreateTimerState extends State<CreateTimerForm> {
                   if (_formKey.currentState!.validate()) {
                     //ScaffoldMessenger.of(context).showSnackBar(
                     //    const SnackBar(content: Text('Processing Data')));
+
                     Navigator.pushNamed(context, CreateRepsScreen.routeName,
                         arguments: ScreenArguments(
-                            int.parse(_timerSetTextController.text)));
+                          int.parse(_timerSetTextController.text),
+                          _timerNameTextController.text,
+                        ));
                   }
                 },
                 child: const Text('Next'),
