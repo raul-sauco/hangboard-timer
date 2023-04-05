@@ -27,11 +27,13 @@ class _RepControllers {
 
 class _SetsStepperState extends State<SetsStepperWidget> {
   // Step counts
-  int _index = 0;
+  int currentStep = 0;
 
   List<_RepControllers> _repControllers = [];
   List<TextField> _hangTimeFields = [];
   List<TextField> _restTimeFields = [];
+
+  List setsData = [];
 
   @override
   void dispose() {
@@ -49,26 +51,32 @@ class _SetsStepperState extends State<SetsStepperWidget> {
     int sets = args.sets;
 
     return Stepper(
-        currentStep: _index,
+        type: StepperType.horizontal,
+        currentStep: currentStep,
         onStepCancel: () {
-          if (_index > 0) {
+          if (currentStep > 0) {
             setState(() {
-              _index -= 1;
+              currentStep -= 1;
             });
           }
         },
         onStepContinue: () {
-          if (_index <= 0) {
+          bool isLastStep = (currentStep == sets - 1);
+
+          if (isLastStep) {
+            // submit the form
+            print(setsData.toString());
+          } else {
             setState(() {
-              _index += 1;
+              currentStep += 1;
             });
           }
         },
-        onStepTapped: (int index) {
-          setState(() {
-            _index = index;
-          });
-        },
+        onStepTapped: (step) => setState(
+              () {
+                currentStep = step;
+              },
+            ),
         steps: getSteps(sets));
   }
 
@@ -83,7 +91,7 @@ class _SetsStepperState extends State<SetsStepperWidget> {
             alignment: Alignment.centerLeft,
             child: Column(
               children: [
-                SizedBox(height: 300, child: _listView()),
+                SizedBox(height: 400, child: _listView()),
                 _addRep(),
                 _saveButton(context, i),
               ],
@@ -132,13 +140,10 @@ class _SetsStepperState extends State<SetsStepperWidget> {
               children: [_hangTimeFields[i], _restTimeFields[i]],
             ),
             decoration: InputDecoration(
-              labelText: 'Set $i.toString()',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+              labelText: 'Rep ${i + 1}',
             ),
           ),
-        )
+        ),
     ];
     return SingleChildScrollView(
         child: Column(
@@ -156,7 +161,12 @@ class _SetsStepperState extends State<SetsStepperWidget> {
               "restTime: ${_repControllers[index].restTime.text}\n";
           reps.add(rep);
         }
+
         Map setData = {'set': set.toString(), 'reps': reps.toString()};
+
+        setState(() {
+          setsData.add(setData);
+        });
 
         await showMessage(context, setData.toString(), "set");
       },
