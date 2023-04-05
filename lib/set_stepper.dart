@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'show_dialog.dart';
 
+class Timer {
+  final String name;
+  final List sets;
+
+  Timer(this.name, this.sets);
+}
+
 class ScreenArguments {
   final int sets;
+  final String name;
 
-  ScreenArguments(this.sets);
+  ScreenArguments(this.sets, this.name);
 }
 
 class SetsStepperWidget extends StatefulWidget {
@@ -49,6 +57,7 @@ class _SetsStepperState extends State<SetsStepperWidget> {
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
     int sets = args.sets;
+    String name = args.name;
 
     return Stepper(
         type: StepperType.horizontal,
@@ -65,7 +74,8 @@ class _SetsStepperState extends State<SetsStepperWidget> {
 
           if (isLastStep) {
             // submit the form
-            print(setsData.toString());
+            Timer timer = Timer(name, setsData);
+            print({timer.name, timer.sets.toString()});
           } else {
             setState(() {
               currentStep += 1;
@@ -183,6 +193,7 @@ class _SetsStepperState extends State<SetsStepperWidget> {
         });
 
         await showMessage(context, setData.toString(), "set");
+        // In productoion change this to action feedback for instance "set saved"// or "save failed"
       },
       child: Text("Save"),
     );
