@@ -153,8 +153,18 @@ class _SetsStepperState extends State<SetsStepperWidget> {
 
   final _saveController = TextEditingController();
   Widget _saveButton(BuildContext context, int set) {
+    final textField = TextField(
+      controller: _saveController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: "Rest after set",
+      ),
+    );
+
     final button = ElevatedButton(
       onPressed: () async {
+        final restAfterSet = int.parse(_saveController.text);
         List reps = [];
         for (var index = 0; index < _repControllers.length; index++) {
           String rep = "hangTime: ${_repControllers[index].hangTime.text}\n" +
@@ -162,7 +172,11 @@ class _SetsStepperState extends State<SetsStepperWidget> {
           reps.add(rep);
         }
 
-        Map setData = {'set': set.toString(), 'reps': reps.toString()};
+        Map setData = {
+          'set': set.toString(),
+          'reps': reps.toString(),
+          'rest': restAfterSet
+        };
 
         setState(() {
           setsData.add(setData);
@@ -176,6 +190,11 @@ class _SetsStepperState extends State<SetsStepperWidget> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
+        Container(
+          child: textField,
+          width: 200,
+          height: 50,
+        ),
         button,
       ],
     );
