@@ -14,11 +14,6 @@ class HangBoardTimer extends StatefulWidget {
 class _HangBoardTimerState extends State<HangBoardTimer> {
   // Some variables, this will all end up being user-editable.
   bool _isHanging = false;
-  final int _totalSets = 12;
-  int _currentSet = 0;
-  final int _workTime = 7;
-  final int _pauseTime = 3;
-  final int _restTime = 60;
   final int _hangTime = 20000;
   int _remainingHangingTime = 20000;
   final int _refreshRate = 10;

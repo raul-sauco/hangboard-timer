@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    paths:
+      - "lib/**"
+      - "test/**"
+      - ".github/workflows/**"
+
+  pull_request:
+    paths:
+      - "lib/**"
+      - "test/**"
+      - ".github/workflows/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+      - name: Install Dependencies
+        run: flutter packages get
+      # - name: Build generated code
+      #   run: flutter pub run build_runner build
+      - name: Format
+        run: flutter format --set-exit-if-changed lib test
+      - name: Analyze
+        run: flutter analyze lib test
+      - name: Run tests
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+      - name: Install lcov
+        run: sudo apt install -y lcov
+      - name: Remove generated files from coverage report
+        run: lcov -r coverage/lcov.info '*.g.dart' -o coverage/lcov.info;
+      - name: Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1.2.0
+        with:
+          min_coverage: 80
+      # - name: Upload coverage to Codecov
+      #   run: |
+      #     curl -Os https://uploader.codecov.io/latest/linux/codecov
+      #     chmod +x codecov
+      #     ./codecov -t ${CODECOV_TOKEN}
