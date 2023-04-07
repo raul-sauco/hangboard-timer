@@ -1,5 +1,10 @@
 # Hang Board Timer App
 
+![CI](https://github.com/raul-sauco/hangboard-timer/actions/workflows/tests.yml/badge.svg)
+[![codecov](https://codecov.io/gh/raul-sauco/hangboard-timer/branch/main/graph/badge.svg?token=0BGM6Q8ZPO)](https://codecov.io/gh/raul-sauco/hangboard-timer)
+
+---
+
 An easy-to-use hang board timer app designed to enhance climbers' training routines with any type of hang board.
 
 ## Getting Started
