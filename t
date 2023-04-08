@@ -5,7 +5,7 @@
 clear
 
 # Check the formatting 
-dart format --set-exit-if-changed  lib test
+dart format --set-exit-if-changed lib test
 
 # Analize the code.
 flutter analyze

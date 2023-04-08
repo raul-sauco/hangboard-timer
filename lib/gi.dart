@@ -8,5 +8,7 @@ final getIt = GetIt.instance;
 // Declare dependencies on different areas of the application.
 Future<void> init() async {
   // Global dependencies
+  // User
+  // getIt.registerLazySingleton<UserRepository>();
   // External dependencies
 }
