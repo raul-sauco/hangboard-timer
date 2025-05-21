@@ -7,7 +7,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'bloc.freezed.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
-  static const int _initialDuration = 30;
+  static const int _initialDuration = 30000;
+
+  /// The time ellapsed between ticks in miliseconds.
+  static const int _tickerInterval = 100;
   Timer? _ticker;
 
   TimerBloc()
@@ -26,7 +29,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   void _onTick(_Tick event, Emitter<TimerState> emit) {
-    final newTime = state.timeLeft - 1;
+    final newTime = state.timeLeft - _tickerInterval;
     if (newTime <= 0) {
       _ticker?.cancel();
       emit(const TimerState.initial(_initialDuration, _initialDuration));
@@ -51,7 +54,9 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   }
 
   void _startTicker() {
-    _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
+    _ticker = Timer.periodic(const Duration(milliseconds: _tickerInterval), (
+      _,
+    ) {
       add(const TimerEvent.tick());
     });
   }
@@ -79,4 +84,6 @@ sealed class TimerState with _$TimerState {
   const factory TimerState.initial(int timeLeft, int totalTime) = Initial;
   const factory TimerState.running(int timeLeft, int totalTime) = Running;
   const factory TimerState.paused(int timeLeft, int totalTime) = Paused;
+
+  int get secondsLeft => (timeLeft / 1000).ceil();
 }

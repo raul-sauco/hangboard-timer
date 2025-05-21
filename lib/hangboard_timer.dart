@@ -30,8 +30,17 @@ class HangboardTimer extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16.0,
+                        horizontal: 24.0,
+                      ),
+                      width: double.infinity,
+                      child: Image.asset('assets/images/hangboard.png'),
+                    ),
+                    const SizedBox(height: 48),
                     Text(
-                      '${state.timeLeft}',
+                      '${state.secondsLeft}',
                       style: const TextStyle(fontSize: 72),
                     ),
                     const SizedBox(height: 24),
