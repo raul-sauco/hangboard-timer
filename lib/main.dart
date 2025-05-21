@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'timer/bloc.dart';
 import 'hangboard_timer.dart';
+import 'timer/bloc.dart';
 
 void main() {
   runApp(const HangboardApp());

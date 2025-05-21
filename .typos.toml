@@ -1,0 +1,15 @@
+[default.extend-ignore-words]
+flutter = "flutter"
+widget = "widget"
+
+[files]
+extend-exclude = [
+  "assets",
+  "build/",
+  ".dart_tool/",
+  "pubspec.lock",
+  "ios/",
+  "linux/",
+  "macos/",
+  "web/",
+]
