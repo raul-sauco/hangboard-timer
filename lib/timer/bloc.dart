@@ -10,7 +10,8 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   static const int _initialDuration = 30;
   Timer? _ticker;
 
-  TimerBloc() : super(const TimerState.initial(_initialDuration)) {
+  TimerBloc()
+    : super(const TimerState.initial(_initialDuration, _initialDuration)) {
     on<_Start>(_onStart);
     on<_Tick>(_onTick);
     on<_Pause>(_onPause);
@@ -21,32 +22,32 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   void _onStart(_Start event, Emitter<TimerState> emit) {
     _ticker?.cancel();
     _startTicker();
-    emit(TimerState.running(state.timeLeft));
+    emit(TimerState.running(state.timeLeft, _initialDuration));
   }
 
   void _onTick(_Tick event, Emitter<TimerState> emit) {
     final newTime = state.timeLeft - 1;
     if (newTime <= 0) {
       _ticker?.cancel();
-      emit(const TimerState.initial(_initialDuration));
+      emit(const TimerState.initial(_initialDuration, _initialDuration));
     } else {
-      emit(TimerState.running(newTime));
+      emit(TimerState.running(newTime, _initialDuration));
     }
   }
 
   void _onPause(_Pause event, Emitter<TimerState> emit) {
     _ticker?.cancel();
-    emit(TimerState.paused(state.timeLeft));
+    emit(TimerState.paused(state.timeLeft, _initialDuration));
   }
 
   void _onResume(_Resume event, Emitter<TimerState> emit) {
     _startTicker();
-    emit(TimerState.running(state.timeLeft));
+    emit(TimerState.running(state.timeLeft, _initialDuration));
   }
 
   void _onReset(_Reset event, Emitter<TimerState> emit) {
     _ticker?.cancel();
-    emit(const TimerState.initial(_initialDuration));
+    emit(const TimerState.initial(_initialDuration, _initialDuration));
   }
 
   void _startTicker() {
@@ -75,7 +76,7 @@ sealed class TimerEvent with _$TimerEvent {
 sealed class TimerState with _$TimerState {
   const TimerState._();
 
-  const factory TimerState.initial(int timeLeft) = Initial;
-  const factory TimerState.running(int timeLeft) = Running;
-  const factory TimerState.paused(int timeLeft) = Paused;
+  const factory TimerState.initial(int timeLeft, int totalTime) = Initial;
+  const factory TimerState.running(int timeLeft, int totalTime) = Running;
+  const factory TimerState.paused(int timeLeft, int totalTime) = Paused;
 }

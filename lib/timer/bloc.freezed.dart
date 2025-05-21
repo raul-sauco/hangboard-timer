@@ -241,7 +241,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 /// @nodoc
 mixin _$TimerState implements DiagnosticableTreeMixin {
 
- int get timeLeft;
+ int get timeLeft; int get totalTime;
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -253,21 +253,21 @@ $TimerStateCopyWith<TimerState> get copyWith => _$TimerStateCopyWithImpl<TimerSt
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'TimerState'))
-    ..add(DiagnosticsProperty('timeLeft', timeLeft));
+    ..add(DiagnosticsProperty('timeLeft', timeLeft))..add(DiagnosticsProperty('totalTime', totalTime));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimerState&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TimerState&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft)&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,timeLeft);
+int get hashCode => Object.hash(runtimeType,timeLeft,totalTime);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'TimerState(timeLeft: $timeLeft)';
+  return 'TimerState(timeLeft: $timeLeft, totalTime: $totalTime)';
 }
 
 
@@ -278,7 +278,7 @@ abstract mixin class $TimerStateCopyWith<$Res>  {
   factory $TimerStateCopyWith(TimerState value, $Res Function(TimerState) _then) = _$TimerStateCopyWithImpl;
 @useResult
 $Res call({
- int timeLeft
+ int timeLeft, int totalTime
 });
 
 
@@ -295,9 +295,10 @@ class _$TimerStateCopyWithImpl<$Res>
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? timeLeft = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? timeLeft = null,Object? totalTime = null,}) {
   return _then(_self.copyWith(
 timeLeft: null == timeLeft ? _self.timeLeft : timeLeft // ignore: cast_nullable_to_non_nullable
+as int,totalTime: null == totalTime ? _self.totalTime : totalTime // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -309,10 +310,11 @@ as int,
 
 
 class Initial extends TimerState with DiagnosticableTreeMixin {
-  const Initial(this.timeLeft): super._();
+  const Initial(this.timeLeft, this.totalTime): super._();
   
 
 @override final  int timeLeft;
+@override final  int totalTime;
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
@@ -325,21 +327,21 @@ $InitialCopyWith<Initial> get copyWith => _$InitialCopyWithImpl<Initial>(this, _
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'TimerState.initial'))
-    ..add(DiagnosticsProperty('timeLeft', timeLeft));
+    ..add(DiagnosticsProperty('timeLeft', timeLeft))..add(DiagnosticsProperty('totalTime', totalTime));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Initial&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Initial&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft)&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,timeLeft);
+int get hashCode => Object.hash(runtimeType,timeLeft,totalTime);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'TimerState.initial(timeLeft: $timeLeft)';
+  return 'TimerState.initial(timeLeft: $timeLeft, totalTime: $totalTime)';
 }
 
 
@@ -350,7 +352,7 @@ abstract mixin class $InitialCopyWith<$Res> implements $TimerStateCopyWith<$Res>
   factory $InitialCopyWith(Initial value, $Res Function(Initial) _then) = _$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- int timeLeft
+ int timeLeft, int totalTime
 });
 
 
@@ -367,9 +369,10 @@ class _$InitialCopyWithImpl<$Res>
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? timeLeft = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? timeLeft = null,Object? totalTime = null,}) {
   return _then(Initial(
 null == timeLeft ? _self.timeLeft : timeLeft // ignore: cast_nullable_to_non_nullable
+as int,null == totalTime ? _self.totalTime : totalTime // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -381,10 +384,11 @@ as int,
 
 
 class Running extends TimerState with DiagnosticableTreeMixin {
-  const Running(this.timeLeft): super._();
+  const Running(this.timeLeft, this.totalTime): super._();
   
 
 @override final  int timeLeft;
+@override final  int totalTime;
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
@@ -397,21 +401,21 @@ $RunningCopyWith<Running> get copyWith => _$RunningCopyWithImpl<Running>(this, _
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'TimerState.running'))
-    ..add(DiagnosticsProperty('timeLeft', timeLeft));
+    ..add(DiagnosticsProperty('timeLeft', timeLeft))..add(DiagnosticsProperty('totalTime', totalTime));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Running&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Running&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft)&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,timeLeft);
+int get hashCode => Object.hash(runtimeType,timeLeft,totalTime);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'TimerState.running(timeLeft: $timeLeft)';
+  return 'TimerState.running(timeLeft: $timeLeft, totalTime: $totalTime)';
 }
 
 
@@ -422,7 +426,7 @@ abstract mixin class $RunningCopyWith<$Res> implements $TimerStateCopyWith<$Res>
   factory $RunningCopyWith(Running value, $Res Function(Running) _then) = _$RunningCopyWithImpl;
 @override @useResult
 $Res call({
- int timeLeft
+ int timeLeft, int totalTime
 });
 
 
@@ -439,9 +443,10 @@ class _$RunningCopyWithImpl<$Res>
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? timeLeft = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? timeLeft = null,Object? totalTime = null,}) {
   return _then(Running(
 null == timeLeft ? _self.timeLeft : timeLeft // ignore: cast_nullable_to_non_nullable
+as int,null == totalTime ? _self.totalTime : totalTime // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -453,10 +458,11 @@ as int,
 
 
 class Paused extends TimerState with DiagnosticableTreeMixin {
-  const Paused(this.timeLeft): super._();
+  const Paused(this.timeLeft, this.totalTime): super._();
   
 
 @override final  int timeLeft;
+@override final  int totalTime;
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
@@ -469,21 +475,21 @@ $PausedCopyWith<Paused> get copyWith => _$PausedCopyWithImpl<Paused>(this, _$ide
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'TimerState.paused'))
-    ..add(DiagnosticsProperty('timeLeft', timeLeft));
+    ..add(DiagnosticsProperty('timeLeft', timeLeft))..add(DiagnosticsProperty('totalTime', totalTime));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Paused&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Paused&&(identical(other.timeLeft, timeLeft) || other.timeLeft == timeLeft)&&(identical(other.totalTime, totalTime) || other.totalTime == totalTime));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,timeLeft);
+int get hashCode => Object.hash(runtimeType,timeLeft,totalTime);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'TimerState.paused(timeLeft: $timeLeft)';
+  return 'TimerState.paused(timeLeft: $timeLeft, totalTime: $totalTime)';
 }
 
 
@@ -494,7 +500,7 @@ abstract mixin class $PausedCopyWith<$Res> implements $TimerStateCopyWith<$Res> 
   factory $PausedCopyWith(Paused value, $Res Function(Paused) _then) = _$PausedCopyWithImpl;
 @override @useResult
 $Res call({
- int timeLeft
+ int timeLeft, int totalTime
 });
 
 
@@ -511,9 +517,10 @@ class _$PausedCopyWithImpl<$Res>
 
 /// Create a copy of TimerState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? timeLeft = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? timeLeft = null,Object? totalTime = null,}) {
   return _then(Paused(
 null == timeLeft ? _self.timeLeft : timeLeft // ignore: cast_nullable_to_non_nullable
+as int,null == totalTime ? _self.totalTime : totalTime // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
