@@ -9,7 +9,7 @@ part 'bloc.freezed.dart';
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   static const int _initialDuration = 30000;
 
-  /// The time ellapsed between ticks in miliseconds.
+  /// The time elapsed between ticks in milliseconds.
   static const int _tickerInterval = 100;
   Timer? _ticker;
 

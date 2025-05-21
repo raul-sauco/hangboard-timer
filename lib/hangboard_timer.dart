@@ -10,12 +10,12 @@ class HangboardTimer extends StatelessWidget {
     final bloc = context.read<TimerBloc>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Hangboard Timer')),
+      appBar: AppBar(title: const Text('Hangboard Timer'), centerTitle: true),
       body: BlocBuilder<TimerBloc, TimerState>(
         builder: (context, state) {
           return Stack(
             children: [
-              Container(color: Colors.red),
+              Container(color: Colors.red[900]),
               Align(
                 alignment: Alignment.centerRight,
                 child: FractionallySizedBox(
@@ -41,7 +41,17 @@ class HangboardTimer extends StatelessWidget {
                     const SizedBox(height: 48),
                     Text(
                       '${state.secondsLeft}',
-                      style: const TextStyle(fontSize: 72),
+                      style: TextStyle(
+                        fontSize: 120,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                            color: Colors.black.withValues(alpha: 0.5),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 24),
                     switch (state) {
