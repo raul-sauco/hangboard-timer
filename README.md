@@ -14,8 +14,8 @@ This app is designed to be used while training with a hang board or similar clim
 
 ## Pre-launch checklist
 
-- [ ] Add a launcher icon
-- [ ] Enable Material Components
+- [x] Add a launcher icon
+- [x] Enable Material Components
 - [ ] Sign the app
 - [ ] Shrink your code with R8
 - [ ] Enable multidex support
