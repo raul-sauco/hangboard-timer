@@ -12,16 +12,16 @@ The app will play a sound effect to signal the start and end of each hang and re
 
 This app is designed to be used while training with a hang board or similar climbing training equipment. Please use the app responsibly and follow proper safety protocols while training.
 
-## Pre-launch checklist
+## Pre-launch checklist [flutter.dev][pre-launch]
 
 - [x] Add a launcher icon
 - [x] Enable Material Components
-- [ ] Sign the app
-- [ ] Shrink your code with R8
-- [ ] Enable multidex support
-- [ ] Review the app manifest
-- [ ] Review the build configuration
-- [ ] Build the app for release
+- [x] Sign the app
+- [x] Shrink your code with R8
+- [x] Enable multidex support
+- [x] Review the app manifest
+- [x] Review the build configuration
+- [x] Build the app for release
 - [ ] Publish to the Google Play Store
 - [ ] Update the app's version number
 - [ ] Android release FAQ
@@ -54,3 +54,4 @@ This app is designed to be used while training with a hang board or similar clim
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 [wishlist]: https://climbernews.com/best-hangboard-app/#what-we-want-from-a-hangboard-app
+[pre-launch]: https://docs.flutter.dev/deployment/android
