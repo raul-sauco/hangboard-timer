@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'hangboard_timer.dart';
-import 'timer/bloc.dart';
+import 'ui/timer/timer_bloc.dart';
+import 'ui/timer/timer_screen.dart';
 
 void main() {
   runApp(const HangboardApp());
@@ -35,7 +35,7 @@ class HangboardApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (_) => TimerBloc(),
-        child: const HangboardTimer(),
+        child: const TimerScreen(),
       ),
     );
   }

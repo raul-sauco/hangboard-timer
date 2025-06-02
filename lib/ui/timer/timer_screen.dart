@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'timer/bloc.dart';
 
-class HangboardTimer extends StatelessWidget {
-  const HangboardTimer({super.key});
+import 'timer_bloc.dart';
+
+class TimerScreen extends StatelessWidget {
+  const TimerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
