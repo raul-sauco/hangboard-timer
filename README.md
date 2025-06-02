@@ -49,9 +49,14 @@ This app is designed to be used while training with a hang board or similar clim
 - [ ] Share workouts easily
 - [ ] Reminder notifications
 
+## References
+
+- [Flutter - Architecture case study][architecture-case-study]
+
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
+[architecture-case-study]: https://docs.flutter.dev/app-architecture/case-study
 [wishlist]: https://climbernews.com/best-hangboard-app/#what-we-want-from-a-hangboard-app
 [pre-launch]: https://docs.flutter.dev/deployment/android
