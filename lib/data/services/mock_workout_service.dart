@@ -7,6 +7,6 @@ class MockWorkoutService implements WorkoutService {
   Future<Workout> getWorkout(String id) async {
     // Simulate anync call
     await Future.delayed(Duration(milliseconds: 300));
-    return Workout.section(id: "1", duration: 3600, sections: List.empty());
+    return Workout.section(id: "1", duration: 30000, sections: List.empty());
   }
 }

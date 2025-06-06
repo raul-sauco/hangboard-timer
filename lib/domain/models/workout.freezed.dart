@@ -79,7 +79,7 @@ as int,
 
 class WorkoutSection implements Workout {
   const WorkoutSection({required this.id, required final  List<Workout> sections, required this.duration}): _sections = sections;
-
+  
 
 @override final  String id;
  final  List<Workout> _sections;
@@ -155,7 +155,7 @@ as int,
 
 class WorkoutRest implements Workout {
   const WorkoutRest({required this.id, required this.duration});
-
+  
 
 @override final  String id;
 @override final  int duration;
@@ -223,7 +223,7 @@ as int,
 
 class WorkoutHang implements Workout {
   const WorkoutHang({required this.id, required this.duration});
-
+  
 
 @override final  String id;
 @override final  int duration;

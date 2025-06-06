@@ -4,17 +4,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../domain/models/workout.dart';
+
 part 'timer_bloc.freezed.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   static const int _initialDuration = 30000;
+  // TODO: Use the workout duration instead of the hardcoded `_initialDuration`
+  final Workout _workout; // ignore: unused_field
 
   /// The time elapsed between ticks in milliseconds.
   static const int _tickerInterval = 100;
   Timer? _ticker;
 
-  TimerBloc()
-    : super(const TimerState.initial(_initialDuration, _initialDuration)) {
+  TimerBloc(Workout workout)
+    : _workout = workout,
+      super(TimerState.initial(workout.duration, workout.duration)) {
     on<_Start>(_onStart);
     on<_Tick>(_onTick);
     on<_Pause>(_onPause);

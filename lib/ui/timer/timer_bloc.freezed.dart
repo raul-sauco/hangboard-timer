@@ -53,7 +53,7 @@ $TimerEventCopyWith(TimerEvent _, $Res Function(TimerEvent) __);
 
 class _Start with DiagnosticableTreeMixin implements TimerEvent {
   const _Start();
-
+  
 
 
 
@@ -91,7 +91,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 class _Tick with DiagnosticableTreeMixin implements TimerEvent {
   const _Tick();
-
+  
 
 
 
@@ -129,7 +129,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 class _Pause with DiagnosticableTreeMixin implements TimerEvent {
   const _Pause();
-
+  
 
 
 
@@ -167,7 +167,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 class _Resume with DiagnosticableTreeMixin implements TimerEvent {
   const _Resume();
-
+  
 
 
 
@@ -205,7 +205,7 @@ String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
 
 class _Reset with DiagnosticableTreeMixin implements TimerEvent {
   const _Reset();
-
+  
 
 
 
@@ -311,7 +311,7 @@ as int,
 
 class Initial extends TimerState with DiagnosticableTreeMixin {
   const Initial(this.timeLeft, this.totalTime): super._();
-
+  
 
 @override final  int timeLeft;
 @override final  int totalTime;
@@ -385,7 +385,7 @@ as int,
 
 class Running extends TimerState with DiagnosticableTreeMixin {
   const Running(this.timeLeft, this.totalTime): super._();
-
+  
 
 @override final  int timeLeft;
 @override final  int totalTime;
@@ -459,7 +459,7 @@ as int,
 
 class Paused extends TimerState with DiagnosticableTreeMixin {
   const Paused(this.timeLeft, this.totalTime): super._();
-
+  
 
 @override final  int timeLeft;
 @override final  int totalTime;

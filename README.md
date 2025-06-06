@@ -52,11 +52,15 @@ This app is designed to be used while training with a hang board or similar clim
 ## References
 
 - [Flutter - Architecture case study][architecture-case-study]
+- [Firebase & Flutter][firebase-&-flutter]
+- [Navigation Basics][navigation-basics]
 
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 [architecture-case-study]: https://docs.flutter.dev/app-architecture/case-study
-[wishlist]: https://climbernews.com/best-hangboard-app/#what-we-want-from-a-hangboard-app
+[firebase-&-flutter]: https://firebase.google.com/docs/flutter/setup?platform=android
+[navigation-basics]: https://docs.flutter.dev/cookbook/navigation/navigation-basics
 [pre-launch]: https://docs.flutter.dev/deployment/android
+[wishlist]: https://climbernews.com/best-hangboard-app/#what-we-want-from-a-hangboard-app
